@@ -1,0 +1,10 @@
+runtime: go119
+instance_class: F1
+automatic_scaling:
+  target_cpu_utilization: 0.65
+  min_instances: 1
+  max_instances: 1
+service: default
+
+env_variables:
+  GAE_REGION: "us-central"
