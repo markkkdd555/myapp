@@ -13,17 +13,21 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Google Cloud SDK and app-engine-go
-      uses: google-github-actions/setup-gcloud@v0.3.0
+    - name: Set up Google Cloud SDK
+      uses: google-github-actions/auth@v1
       with:
-        version: '330.0.0'  # Specify the Google Cloud SDK version
-        service_account_key: ${{ secrets.GCP_CREDENTIALS }}
-        additional_components: app-engine-go
+        credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+        project_id: sylvan-altar-424311-a8  # Replace with your Google Cloud project ID
 
     - name: Set up Go
       uses: actions/setup-go@v2
       with:
         go-version: 1.19
+
+    - name: Install app-engine-go component
+      run: |
+        sudo apt-get update
+        sudo apt-get install google-cloud-sdk-app-engine-go
 
     - name: Install dependencies
       run: go mod download
