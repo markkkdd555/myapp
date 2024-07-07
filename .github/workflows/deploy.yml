@@ -24,10 +24,17 @@ jobs:
       with:
         go-version: 1.19
 
-    - name: Install app-engine-go component
+    - name: Install gcloud CLI
       run: |
-        sudo apt-get update
-        sudo apt-get install google-cloud-sdk-app-engine-go
+        curl -O https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-369.0.0-linux-x86_64.tar.gz
+        tar -xzf google-cloud-sdk-369.0.0-linux-x86_64.tar.gz
+        ./google-cloud-sdk/install.sh --quiet
+
+    - name: Verify gcloud installation
+      run: gcloud version
+
+    - name: Install app-engine-go component (if needed)
+      run: gcloud components install app-engine-go --quiet || true
 
     - name: Install dependencies
       run: go mod download
